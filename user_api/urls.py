@@ -19,12 +19,15 @@ from django.urls import path,include
 
 from rest_framework import routers
 
-from user_app.views import GroupViewSet, UserViewSet,LogEntryViewSet
+from user_app.views import GroupViewSet, UserViewSet,LogEntryViewSet,PermissionViewSet,SessionViewSet,ContentTypeViewSet
 
 router = routers.DefaultRouter()
 router.register(r'users', UserViewSet)
 router.register(r'groups', GroupViewSet)
 router.register(r'logentries', LogEntryViewSet, basename='logentry')
+router.register(r'permissions', PermissionViewSet, basename='permission')
+router.register(r'sessions', SessionViewSet, basename='session')
+router.register(r'contenttypes', ContentTypeViewSet, basename='contenttype')
 
 urlpatterns = [
     path('admin/', admin.site.urls),

@@ -1,8 +1,10 @@
 from django.contrib.auth.models import Group, User
 from rest_framework import permissions, viewsets
 from django.contrib.admin.models import LogEntry
-from user_app.serializers import GroupSerializer, UserSerializer,LogEntrySerializer
-
+from user_app.serializers import GroupSerializer, UserSerializer,LogEntrySerializer,PermissionSerializer,SessionSerializer,ContentTypeSerializer, TokenSerializer
+from django.contrib.auth.models import Permission
+from django.contrib.sessions.models import Session
+from django.contrib.contenttypes.models import ContentType
 
 class UserViewSet(viewsets.ModelViewSet):
     """
@@ -30,3 +32,19 @@ class LogEntryViewSet(viewsets.ReadOnlyModelViewSet):
     ).all().order_by("-action_time")
 
     serializer_class = LogEntrySerializer  
+
+class PermissionViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Permission.objects.select_related(
+        "content_type"
+    ).all().order_by("name")
+
+    serializer_class = PermissionSerializer    
+
+class SessionViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Session.objects.all().order_by("-expire_date")
+    serializer_class = SessionSerializer
+
+class ContentTypeViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = ContentType.objects.all().order_by("model")
+    serializer_class = ContentTypeSerializer    
+
