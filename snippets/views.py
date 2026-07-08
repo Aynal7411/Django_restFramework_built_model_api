@@ -3,7 +3,7 @@ from snippets.models import Snippet
 from snippets.serializers import SnippetSerializer
 from rest_framework.views import APIView
 from rest_framework import permissions
-
+from rest_framework.response import Response
 from .permissions import IsOwnerOrReadOnly
 
 class SnippetViewSet(viewsets.ModelViewSet):
